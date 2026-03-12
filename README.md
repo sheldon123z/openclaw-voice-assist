@@ -1,6 +1,6 @@
 # Qwen3 Voice Service
 
-OpenAI API 兼容的多后端语音合成服务 + 管理面板 + 浏览器语音提醒脚本。
+OpenAI API 兼容的多后端语音合成服务 + 管理面板 + 浏览器语音提醒脚本 + OpenClaw Skill。
 
 ## 架构
 
@@ -35,7 +35,28 @@ OpenAI API 兼容的多后端语音合成服务 + 管理面板 + 浏览器语音
 | **TTS Server** | `tts-server/` | 多后端语音合成服务，OpenAI API 兼容 |
 | **Dashboard** | `dashboard/` | Web 管理面板，状态监控 + TTS 试听 + 实时请求日志 |
 | **Userscript** | `userscript/` | 油猴脚本，AI 完成任务后自动语音播报 |
+| **OpenClaw Skill** | `openclaw-skill/` | OpenClaw 技能插件，让 AI 自动输出语音通知格式 |
 | **Systemd** | `systemd/` | systemd 服务配置文件 |
+
+## OpenClaw Skill 一键安装
+
+如果你使用 [OpenClaw](https://openclaw.ai/)，可以直接安装技能插件，无需手动配置 AI 提示词：
+
+```bash
+# 1. 将 skill 目录复制到 OpenClaw skills 目录
+cp -r openclaw-skill ~/.openclaw/workspace/skills/tts-task-notify
+
+# 2. 设置 TTS 服务器地址
+export TTS_SERVER_URL="http://你的服务器IP:58201"
+# 或写入 OpenClaw 配置持久化
+
+# 3. 验证 TTS 服务可达
+bash ~/.openclaw/workspace/skills/tts-task-notify/scripts/check-tts.sh
+```
+
+安装后 OpenClaw 会自动在任务完成时输出 `【任务完成总结】...[[END_SUMMARY]]` 格式的总结，配合油猴脚本即可实现语音通知。
+
+详见 [`openclaw-skill/SKILL.md`](openclaw-skill/SKILL.md)。
 
 ## 快速开始
 
