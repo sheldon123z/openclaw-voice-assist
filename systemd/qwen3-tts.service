@@ -1,0 +1,16 @@
+[Unit]
+Description=Qwen3-TTS OpenAI-Compatible Speech Synthesis Server
+After=network.target
+
+[Service]
+Type=simple
+User=zhengxiaodong
+WorkingDirectory=/home/zhengxiaodong/exps/qwen3-tts-server
+ExecStart=/bin/bash /home/zhengxiaodong/exps/qwen3-tts-server/start.sh
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,16 @@
+[Unit]
+Description=Qwen3 ASR/TTS Dashboard
+After=network.target qwen3-asr.service qwen3-tts.service
+
+[Service]
+Type=simple
+User=zhengxiaodong
+WorkingDirectory=/home/zhengxiaodong/exps/qwen3-dashboard
+ExecStart=/bin/bash /home/zhengxiaodong/exps/qwen3-dashboard/start.sh
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
