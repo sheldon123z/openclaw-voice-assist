@@ -1,7 +1,7 @@
 ---
 name: tts-task-notify
 description: Automatically announce task completion summaries via TTS (Text-to-Speech). When a task is finished, output a fixed-format summary that triggers voice notification through the companion browser userscript and LAN TTS server.
-homepage: https://github.com/sheldon123z/qwen3-voice-service
+homepage: https://github.com/sheldon123z/openclaw-voice-assist
 allowed-tools: ["bash"]
 metadata:
   openclaw:
@@ -83,7 +83,7 @@ Available models: `qwen3-tts` (GPU, highest quality), `edge-tts` (cloud, fastest
 
 ## Setup
 
-This skill requires a companion TTS server running on your LAN. See the [setup guide](https://github.com/sheldon123z/qwen3-voice-service) for:
+This skill requires a companion TTS server running on your LAN. See the [setup guide](https://github.com/sheldon123z/openclaw-voice-assist) for:
 
 1. **TTS Server** — Multi-backend speech synthesis server (port 58201)
 2. **Dashboard** — Web management panel (port 8210)

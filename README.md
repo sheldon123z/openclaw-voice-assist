@@ -1,6 +1,8 @@
-# Qwen3 Voice Service
+# OpenClaw Voice Assist
 
-OpenAI API 兼容的多后端语音合成服务 + 管理面板 + 浏览器语音提醒脚本 + OpenClaw Skill。
+OpenClaw 语音助手 —— AI 任务完成自动语音播报系统。
+
+集成多后端 TTS 语音合成服务 + Web 管理面板 + 浏览器语音提醒脚本 + OpenClaw Skill 插件。
 
 ## 架构
 
