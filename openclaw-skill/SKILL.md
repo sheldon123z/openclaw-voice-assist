@@ -14,25 +14,49 @@ metadata:
 
 # TTS Task Completion Notification
 
-You are equipped with a voice notification system. When you complete a task or reach a significant milestone, you MUST output a structured summary that will be automatically detected by a browser userscript and played aloud via a TTS server on the local network.
+You are equipped with a voice notification system. A browser userscript monitors your output and automatically plays a voice summary via a TTS server on the local network. You must **intelligently decide** when to trigger it.
+
+## When to Notify (DO notify)
+
+Output a summary ONLY when you performed **real work that took effort**, such as:
+
+- Wrote, modified, or deleted code files
+- Ran commands that changed system state (install, deploy, migrate, restart, etc.)
+- Completed a multi-step debugging or troubleshooting session
+- Finished a research/analysis task the user was waiting on
+- Created or updated configuration, documentation, or infrastructure
+- Any task where the user likely stepped away and needs a "done" alert
+
+**Rule of thumb**: If you used tools (file edits, bash commands, searches across multiple files), it's worth notifying.
+
+## When NOT to Notify (SKIP the summary)
+
+Do NOT output a summary for:
+
+- Simple Q&A — answering a question, explaining a concept
+- Short replies — one or two sentences of conversation
+- Clarifying questions — asking the user for more info
+- Showing information — listing files, showing status, reading configs
+- Partial progress — intermediate steps of a larger task (only notify at the end)
+- Opinions or suggestions — recommending approaches without executing them
+
+**Rule of thumb**: If you only *talked* but didn't *do* anything, skip it.
 
 ## Summary Format
 
 At the end of your response (after all code, explanations, etc.), output exactly:
 
-```
 【任务完成总结】简短的完成摘要[[END_SUMMARY]]
-```
 
-**The markers MUST be output as raw text, NOT inside a code block.**
+**The markers MUST be output as raw text, NOT inside a fenced code block.**
 
 ## Rules
 
 1. **Content**: 100 characters max, natural spoken Chinese, describe what was done and the result
 2. **No code**: Never include code, commands, file paths, or technical jargon in the summary
-3. **Timing**: Only output when a task is truly complete, NOT during intermediate steps
-4. **Frequency**: At most ONE summary per response
-5. **Format**: The `【任务完成总结】` and `[[END_SUMMARY]]` markers must appear as plain text on the same line or adjacent lines — never inside ``` fenced code blocks or `inline code`
+3. **Spoken style**: Write as if speaking aloud — "已完成" not "done", "三个接口" not "3 APIs"
+4. **Frequency**: At most ONE summary per response, only at the very end
+5. **Match language**: Use the same language the user is speaking (typically Chinese)
 
 ## Good Examples
 
@@ -44,13 +68,12 @@ At the end of your response (after all code, explanations, etc.), output exactly
 
 【任务完成总结】配置文件已修复，服务重启后运行正常。[[END_SUMMARY]]
 
-## Bad Examples (DO NOT do these)
+## No-Notify Examples (these should NOT have a summary)
 
-- ❌ Markers inside code block (userscript cannot detect)
-- ❌ Summary longer than 150 characters (will be truncated)
-- ❌ Summary for every small step (only final completion)
-- ❌ Technical content like `pip install xxx` or `git push` in summary
-- ❌ English summary when user speaks Chinese (match user's language)
+- User: "这个函数是干什么的？" → You explain → **No summary**
+- User: "帮我看看日志" → You show logs → **No summary**
+- User: "用哪个框架好？" → You give recommendation → **No summary**
+- User: "继续" → You do step 2 of 5 → **No summary** (wait until all done)
 
 ## TTS Health Check
 
